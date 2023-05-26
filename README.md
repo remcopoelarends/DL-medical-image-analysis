@@ -6,5 +6,5 @@
 
 ## Todo
 - [x] add validation set
-- [ ] add visulization to training log
+- [x] add visulization to training log
 - [ ] evaluation on test set

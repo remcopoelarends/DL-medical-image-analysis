@@ -1,0 +1,54 @@
+model.eval()
+
+# Initialize evaluation metrics
+total_hausdorff = 0.0
+total_dice = 0.0
+total_samples = 0
+
+
+with torch.no_grad():
+    for step, (img, gt) in enumerate(tqdm(dataloader)):
+        img = img.to(device)
+        gt = gt.to(device)
+        mask = model(img)
+        shaped_image = img.detach().cpu().numpy()[0][0]
+        shaped_gt = gt.detach().cpu().numpy()[0]
+        shaped_pr = mask.detach().cpu().numpy()[0]
+    
+        threshold = 0.95  # Set your desired threshold value 
+        binary_mask = (shaped_pr > threshold)
+        
+        # Calculate Hausdorff distance and Dice mrtrics
+        hausdorff_distance_1 = metrics.hausdorff_distance(binary_mask[0], shaped_gt[0])
+        dice_metric_1 = metrics.dice(binary_mask[0], shaped_gt[0])
+        hausdorff_distance_2 = metrics.hausdorff_distance(binary_mask[1], shaped_gt[1])
+        dice_metric_2 = metrics.dice(binary_mask[1], shaped_gt[1])
+        hausdorff_distance_3 = metrics.hausdorff_distance(binary_mask[2], shaped_gt[2])
+        dice_metric_3 = metrics.dice(binary_mask[2], shaped_gt[2])
+        
+        total_hausdorff_1 += hausdorff_distance_1
+        total_dice_1 += dice_metric_1
+        total_hausdorff_2 += hausdorff_distance_2
+        total_dice_2 += dice_metric_2
+        total_hausdorff_3 += hausdorff_distance_3
+        total_dice_3 += dice_metric_3
+        
+        # Update total samples
+        total_samples += 1
+
+# Calculate average Hausdorff distance and Dice metric
+average_hausdorff_1 = total_hausdorff_1 / total_samples
+average_dice_1 = total_dice_1 / total_samples
+average_hausdorff_2 = total_hausdorff_2 / total_samples
+average_dice_2 = total_dice_2 / total_samples
+average_hausdorff_3 = total_hausdorff_3 / total_samples
+average_dice_3 = total_dice_3 / total_samples
+
+# Log metrics to wandb
+wandb.log({"HD1": average_hausdorff_1,
+           "HD2": average_hausdorff_2,
+           "HD3": average_hausdorff_3,
+           "D1": average_dice_1,
+           "D2": average_dice_2,
+           "D3": average_dice_3})
+    

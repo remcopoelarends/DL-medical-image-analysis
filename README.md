@@ -7,4 +7,8 @@
 ## Todo
 - [x] add validation set
 - [x] add visulization to training log
-- [ ] evaluation on test set
+- [x] evaluation on customized code
+- [ ] evaluation on test set (Using Website Code)
+- [ ] Explainability - Grad CAM
+- [ ] Explainability - Wrong case analysis
+- [ ] Explainability - Random mask -> stability of models

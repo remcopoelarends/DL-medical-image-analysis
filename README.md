@@ -2,6 +2,9 @@
 
 Repository for Deep Learning for Medical Image Analysis Group 4
 
+## Convert Dataset
+Use **preprocess.ipynb** to convert nii.gz format to npy.
+
 ## Training
 Use **Training.ipynb** for training network.
 

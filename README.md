@@ -20,7 +20,9 @@ Note:
 2. **For submission**: Add **seg_file_name = base_file_name.replace('_gt.nii', '_seg.nii.gz')** 
 3. **For evaluation**: Comment **seg_file_name = base_file_name.replace('_gt.nii', '_seg.nii.gz')**
 
-Run **Evaluation.ipynb** To get evaluation result.
+Run **Evaluation.ipynb** to get evaluation result.
+
+Run **Visualize_results.ipynb** to visualize the ground truth and predicted masks.
 
 Note:
 
